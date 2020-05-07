@@ -1,0 +1,1 @@
+{"ast":null,"code":"import ListScreen from \"./ListScreen\";\nexport default ListScreen;","map":{"version":3,"sources":["/Users/danielzaucha/beer-finder-app/src/screens/index.js"],"names":["ListScreen"],"mappings":"AAAA,OAAOA,UAAP;AAEA,eAAeA,UAAf","sourcesContent":["import ListScreen from './ListScreen';\n\nexport default ListScreen;\n"]},"metadata":{},"sourceType":"module"}

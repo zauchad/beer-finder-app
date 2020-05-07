@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var API_URL = 'https://api.punkapi.com/v2/beers';","map":{"version":3,"sources":["/Users/danielzaucha/beer-finder-app/src/config.js"],"names":["API_URL"],"mappings":"AAAA,OAAO,IAAMA,OAAO,GAAG,kCAAhB","sourcesContent":["export const API_URL = 'https://api.punkapi.com/v2/beers';\n"]},"metadata":{},"sourceType":"module"}

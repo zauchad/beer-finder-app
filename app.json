@@ -1,0 +1,11 @@
+{
+  "name": "beer-finder-app",
+  "displayName": "beer-finder-app",
+  "expo": {
+    "name": "beer-finder-app",
+    "slug": "beer-finder-app",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"]
+  }
+}
