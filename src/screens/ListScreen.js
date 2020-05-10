@@ -6,7 +6,7 @@ import {
   Text,
   FlatList,
   RefreshControl,
-  Image,
+  Alert,
   SafeAreaView,
 } from 'react-native';
 import { SearchBar, Button } from 'react-native-elements';
@@ -54,12 +54,10 @@ export default class ListScreen extends React.Component {
 
     let url = `${API_URL}?page=${this.page}${searchParam}${filterParams}`;
 
-    console.log('url', url);
     return url;
   };
 
   fetchData = (refreshing = false) => {
-    console.log('fetch data');
     this.setState(
       {
         ...(!refreshing && { loading: true }),
@@ -79,8 +77,9 @@ export default class ListScreen extends React.Component {
             });
           })
           .catch((error) => {
+            Alert.alert('Someting went wrong when fetching beer list');
+
             this.setState({
-              error: 'Someting went wrong when fetching beer list',
               ...(!refreshing && { loading: false }),
               ...(refreshing && { refreshing: false }),
             });
@@ -95,11 +94,13 @@ export default class ListScreen extends React.Component {
   };
 
   handleLoadMore = () => {
-    if (!this.state.listScrolled || this.state.items.length % 25 != 0) {
+    let { listScrolled, items, loading, refreshing } = this.state;
+
+    if (!listScrolled || items.length % 25 != 0) {
       return null;
     }
 
-    if (!this.state.loading && !this.state.refreshing) {
+    if (!loading && !refreshing) {
       this.page += 1;
       this.fetchData();
     }
@@ -128,8 +129,6 @@ export default class ListScreen extends React.Component {
   };
 
   updateSearch = (text, reset) => {
-    console.log('update search', text);
-
     this.setState({ search: text }, () => {
       if ((text.length && text.length >= 3) || reset) {
         this.fetchData(true);
@@ -147,8 +146,6 @@ export default class ListScreen extends React.Component {
   };
 
   onFilterChange = (queryParam, value) => {
-    console.log('queryParam value', queryParam, value);
-
     let filters = this.state.filters;
     filters[queryParam] = value;
 
@@ -197,7 +194,7 @@ export default class ListScreen extends React.Component {
               onRefresh={this.onRefresh}
             />
           }
-          renderItem={({ item }) => <BeerTile item={item} />}
+          renderItem={({ item }) => <BeerTile item={item} clickable />}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={this.renderFooter}
           onEndReachedThreshold={0.5}

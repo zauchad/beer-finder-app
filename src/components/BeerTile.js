@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableHighlight } from 'react-native';
+import {
+  View,
+  Image,
+  Text,
+  TouchableWithoutFeedback,
+  StyleSheet,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
 import BASE_COLOR, { GREEN_COLOR } from '../helpers';
 import DetailsModal from '../components/DetailsModal';
 
 let BeerTile = (props) => {
-  let { item } = props;
+  let { item, clickable } = props;
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -15,78 +21,69 @@ let BeerTile = (props) => {
   }
 
   const toggleModalVisible = () => {
+    if (!clickable) {
+      return;
+    }
+
     setModalVisible(!modalVisible);
   };
 
   return (
-    <TouchableHighlight onPress={toggleModalVisible}>
-      <View
-        style={{
-          flexDirection: 'row',
-          padding: 15,
-          alignItems: 'center',
-        }}
-      >
+    <TouchableWithoutFeedback onPress={toggleModalVisible}>
+      <View style={styles.container}>
         <Image
           source={{ uri: item.image_url }}
           resizeMode='contain'
-          style={{
-            height: 60,
-            width: 60,
-            marginRight: 10,
-          }}
+          style={styles.image}
         />
         <View style={{ flexShrink: 1 }}>
-          <Text
-            style={{
-              fontSize: 18,
-              alignItems: 'center',
-              color: BASE_COLOR,
-            }}
-          >
-            {item.name}
-          </Text>
+          <Text style={styles.text}>{item.name}</Text>
 
-          <Text
-            style={{
-              fontSize: 14,
-              alignItems: 'center',
-              color: BASE_COLOR,
-            }}
-          >
-            {item.description}
-          </Text>
+          {clickable && <Text style={styles.text}>{item.description}</Text>}
 
-          <Text
-            style={{
-              fontSize: 14,
-              alignItems: 'center',
-              color: GREEN_COLOR,
-            }}
-          >
+          <Text style={[styles.text, { color: GREEN_COLOR }]}>
             {`First brewed: ${item.first_brewed}`}
           </Text>
 
           {item.ingredients && (
-            <Text
-              style={{
-                fontSize: 14,
-                alignItems: 'center',
-                color: BASE_COLOR,
-                fontStyle: 'italic',
-              }}
-            >
+            <Text style={styles.textItalic}>
               {`Yeast: ${item.ingredients.yeast}`}
             </Text>
           )}
         </View>
       </View>
-    </TouchableHighlight>
+    </TouchableWithoutFeedback>
   );
 };
 
+const textStyle = {
+  fontSize: 14,
+  alignItems: 'center',
+  color: BASE_COLOR,
+};
+
+const styles = StyleSheet.create({
+  text: textStyle,
+  textItalic: {
+    ...textStyle,
+    fontStyle: 'italic',
+  },
+  image: {
+    height: 60,
+    width: 60,
+    marginRight: 10,
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 15,
+    alignItems: 'center',
+  },
+});
+
 BeerTile.propTypes = {
   item: PropTypes.object.isRequired,
+  clickable: PropTypes.bool,
 };
 
 export default BeerTile;

@@ -6,10 +6,12 @@ import {
   Modal,
   TouchableHighlight,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-import BASE_COLOR, { GREEN_COLOR, GREY_COLOR } from '../helpers';
+import BASE_COLOR from '../helpers';
+import Related from './Related';
 
 let DetailsModal = (props) => {
   let { item } = props;
@@ -17,107 +19,52 @@ let DetailsModal = (props) => {
   const [modalVisible, setModalVisible] = useState(true);
 
   return (
-    <Modal
-      animationType='slide'
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-      }}
-    >
+    <Modal animationType='slide' transparent={true} visible={modalVisible}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <View
-            style={{
-              padding: 15,
-              alignItems: 'center',
-              height: '100%',
-            }}
-          >
-            <Image
-              source={{ uri: item.image_url }}
-              resizeMode='contain'
-              style={{
-                height: 150,
-                width: 150,
-                marginBottom: 10,
+          <ScrollView>
+            <TouchableHighlight
+              style={{ position: 'absolute', top: 15, right: 15 }}
+              onPress={() => {
+                setModalVisible(!modalVisible);
               }}
-            />
-            <View style={{ flexShrink: 1 }}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  alignItems: 'center',
-                  color: BASE_COLOR,
-                }}
-              >
-                {item.name}
-              </Text>
+            >
+              <Text style={styles.text}>Back</Text>
+            </TouchableHighlight>
+            <View style={styles.container}>
+              <Image
+                source={{ uri: item.image_url }}
+                resizeMode='contain'
+                style={styles.image}
+              />
+              <View style={{ flexShrink: 1 }}>
+                <Text style={styles.text}>{item.name}</Text>
+                <Text style={styles.text}>{item.description}</Text>
 
-              <Text
-                style={{
-                  fontSize: 14,
-                  alignItems: 'center',
-                  color: BASE_COLOR,
-                }}
-              >
-                {item.description}
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 14,
-                  alignItems: 'center',
-                  color: BASE_COLOR,
-                }}
-              >
-                {`Brewers tips: ${item.brewers_tips}`}
-              </Text>
-
-              {
-                <Text
-                  style={{
-                    fontSize: 14,
-                    alignItems: 'center',
-                    color: BASE_COLOR,
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {`ABV: ${item.abv}`}
+                <Text style={styles.text}>
+                  {`Brewers tips: ${item.brewers_tips}`}
                 </Text>
-              }
 
-              {
-                <Text
-                  style={{
-                    fontSize: 14,
-                    alignItems: 'center',
-                    color: BASE_COLOR,
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {`IBU: ${item.ibu}`}
-                </Text>
-              }
+                {<Text style={styles.textItalic}>{`ABV: ${item.abv}`}</Text>}
+                {<Text style={styles.textItalic}>{`IBU: ${item.ibu}`}</Text>}
+                {<Text style={styles.textItalic}>{`EBC: ${item.ebc}`}</Text>}
 
-              {
-                <Text
-                  style={{
-                    fontSize: 14,
-                    alignItems: 'center',
-                    color: BASE_COLOR,
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {`EBC: ${item.ebc}`}
-                </Text>
-              }
+                <Related type='abv' typeValue={item.abv} />
+                <Related type='ibu' typeValue={item.ibu} />
+                <Related type='ebc' typeValue={item.ebc} />
+              </View>
             </View>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
   );
+};
+
+const textStyle = {
+  fontSize: 14,
+  alignItems: 'center',
+  color: BASE_COLOR,
 };
 
 const styles = StyleSheet.create({
@@ -142,6 +89,25 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  text: textStyle,
+  textItalic: {
+    ...textStyle,
+    fontStyle: 'italic',
+  },
+  image: {
+    height: 150,
+    width: 150,
+    marginBottom: 10,
+  },
+  container: {
+    padding: 15,
+    alignItems: 'center',
+    height: '100%',
+  },
 });
+
+DetailsModal.propTypes = {
+  item: PropTypes.object.isRequired,
+};
 
 export default DetailsModal;

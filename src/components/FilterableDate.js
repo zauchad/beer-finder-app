@@ -12,7 +12,6 @@ let FilterableDate = (props) => {
   const title = name.replace('_', ' ');
 
   if (date) {
-    console.log('dateeee', date);
     formattedDate = new Date(`${date.split('-')[1]}-${date.split('-')[0]}`);
   }
 
@@ -28,11 +27,9 @@ let FilterableDate = (props) => {
     currentDate = `${currentDate.getMonth()}-${currentDate.getFullYear()}`;
     setShow(Platform.OS === 'ios');
 
-    console.log('FilterableDate onChange currentDate', currentDate);
     onChange(name, currentDate);
   };
 
-  console.log('FilterableDate formatteddate', formattedDate);
   return (
     <View>
       <Button
@@ -59,6 +56,8 @@ let FilterableDate = (props) => {
 
 FilterableDate.propTypes = {
   name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  date: PropTypes.string,
 };
 
 export default FilterableDate;
