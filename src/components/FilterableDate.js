@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button } from 'react-native-elements';
@@ -8,16 +8,15 @@ import BASE_COLOR, { GREEN_COLOR } from '../helpers';
 
 let FilterableDate = (props) => {
   let { name, onChange, date } = props,
-    formattedDate = null;
+    formattedDate = new Date();
   const title = name.replace('_', ' ');
 
   if (date) {
     console.log('dateeee', date);
-    formattedDate = `${date.split('-')[1]}-${date.split('-')[0]}`;
+    formattedDate = new Date(`${date.split('-')[1]}-${date.split('-')[0]}`);
   }
 
   const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date(formattedDate));
 
   const toggleShow = () => {
     setShow(!show);
@@ -28,22 +27,19 @@ let FilterableDate = (props) => {
 
     currentDate = `${currentDate.getMonth()}-${currentDate.getFullYear()}`;
     setShow(Platform.OS === 'ios');
-    setSelectedDate(currentDate);
 
+    console.log('FilterableDate onChange currentDate', currentDate);
     onChange(name, currentDate);
   };
 
-  console.log('datepicker selectedDate', selectedDate);
-  console.log('datepicker formatteddate', formattedDate);
-  console.log('new dtae', new Date());
-  console.log('new dtae', new Date(''));
+  console.log('FilterableDate formatteddate', formattedDate);
   return (
     <View>
       <Button
         title={title}
         buttonStyle={{
           marginRight: 5,
-          //   backgroundColor: date ? GREEN_COLOR : BASE_COLOR,
+          backgroundColor: date ? GREEN_COLOR : BASE_COLOR,
         }}
         onPress={toggleShow}
       />
@@ -54,16 +50,12 @@ let FilterableDate = (props) => {
           value={new Date()}
           display='default'
           onChange={afterOnChange}
-          value={new Date('2019-10')}
+          value={formattedDate}
         />
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
 
 FilterableDate.propTypes = {
   name: PropTypes.string.isRequired,

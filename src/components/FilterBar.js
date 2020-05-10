@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 
-import BASE_COLOR, { WHITE_COLOR } from '../helpers';
+import BASE_COLOR, { WHITE_COLOR, GREY_COLOR } from '../helpers';
 
 export default FilterBar = (props) => {
   return (
@@ -12,7 +13,16 @@ export default FilterBar = (props) => {
         contentContainerStyle={styles.scrollViewContent}
         showsHorizontalScrollIndicator={false}
       >
-        {props.children}
+        <View style={{ flexDirection: 'row' }}>{props.children}</View>
+        <Button
+          title='Clear'
+          onPress={props.clearFilters}
+          buttonStyle={{
+            alignSelf: 'flex-start',
+            justifyContent: 'flex-end',
+            backgroundColor: GREY_COLOR,
+          }}
+        ></Button>
       </ScrollView>
     </View>
   );
@@ -29,11 +39,12 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 });
 
 FilterBar.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
+  clearFilters: PropTypes.func,
 };
