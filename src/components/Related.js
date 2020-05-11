@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 
-import BASE_COLOR from '../helpers';
-import API_URL from '../config';
+import BASE_COLOR, { urlForRelated } from '../helpers';
 import BeerTile from './BeerTile';
 
 /**
@@ -21,18 +20,13 @@ import BeerTile from './BeerTile';
  */
 export default Related = (props) => {
   let { type, typeValue } = props,
-    typeLowerCase = type.toLowerCase(),
     approx = 3;
 
   const [items, setItems] = useState([]);
 
-  let url = `${API_URL}?${typeLowerCase}_lt=${
-    typeValue + approx
-  }&${typeLowerCase}_gt=${typeValue - approx}&per_page=5`;
-
   useEffect(() => {
     if (!items.length) {
-      fetch(url)
+      fetch(urlForRelated(type, typeValue, approx))
         .then((response) => response.json())
         .then((responseJson) => {
           setItems(responseJson);

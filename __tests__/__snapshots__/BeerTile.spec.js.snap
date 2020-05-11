@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BeerTile component Matches the snapshot 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "flexDirection": "row",
+      "padding": 15,
+    }
+  }
+>
+  <Image
+    resizeMode="contain"
+    source={
+      Object {
+        "uri": "https://images.punkapi.com/v2/keg.png",
+      }
+    }
+    style={
+      Object {
+        "height": 60,
+        "marginRight": 10,
+        "width": 60,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexShrink": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "color": "#000",
+            "fontSize": 14,
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      Buzz
+    </Text>
+    <Text
+      style={
+        Object {
+          "alignItems": "center",
+          "color": "#000",
+          "fontSize": 14,
+        }
+      }
+    >
+      A light, crisp and bitter IPA brewed with English and American hops. A small batch brewed only once.
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "color": "#000",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#228B22",
+          },
+        ]
+      }
+    >
+      First brewed: 09/2007
+    </Text>
+    <Text
+      style={
+        Object {
+          "alignItems": "center",
+          "color": "#000",
+          "fontSize": 14,
+          "fontStyle": "italic",
+        }
+      }
+    >
+      Yeast: Wyeast 1056 - American Ale™
+    </Text>
+  </View>
+</View>
+`;

@@ -27,11 +27,12 @@
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.23",
     "babel-preset-expo": "~8.1.0",
-    "jest-expo": "~37.0.0",
+    "jest-expo": "^37.0.0",
+    "react-test-renderer": "^16.13.1",
     "typescript": "~3.8.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "jest-expo"
   },
   "private": true
 }

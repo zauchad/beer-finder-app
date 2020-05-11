@@ -62,6 +62,9 @@ export default class ListScreen extends React.Component {
     return url;
   };
 
+  /**
+   * Perform fetching data from API
+   */
   fetchData = (refreshing = false) => {
     this.setState(
       {
