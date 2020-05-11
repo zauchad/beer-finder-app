@@ -17,27 +17,19 @@ import DetailsModal from '../components/DetailsModal';
  * Displays different data parts depending on use clickable prop
  *
  * item:      beer details
- * clickable: availability to open modal with beer details
+ * related:   display tile as related item (with different properties)
  *
  * @param {
- *      item:      object,
- *      clickable: bool
+ *      item:    object,
+ *      related: bool
  * } props
  */
 let BeerTile = (props) => {
-  let { item, clickable } = props;
+  let { item, related } = props;
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  if (modalVisible) {
-    return <DetailsModal item={item} />;
-  }
-
   const toggleModalVisible = () => {
-    if (!clickable) {
-      return;
-    }
-
     setModalVisible(!modalVisible);
   };
 
@@ -52,24 +44,26 @@ let BeerTile = (props) => {
         <View style={{ flexShrink: 1 }}>
           <Text style={[styles.text, { fontWeight: 'bold' }]}>{item.name}</Text>
 
-          {clickable && <Text style={styles.text}>{item.description}</Text>}
+          {!related && <Text style={styles.text}>{item.description}</Text>}
 
-          {clickable && (
+          {!related && (
             <Text style={[styles.text, { color: GREEN_COLOR }]}>
               {`First brewed: ${item.first_brewed}`}
             </Text>
           )}
 
-          {clickable && item.ingredients && (
+          {!related && item.ingredients && (
             <Text style={styles.textItalic}>
               {`Yeast: ${item.ingredients.yeast}`}
             </Text>
           )}
 
-          {!clickable && <Text style={styles.text}>{`ABV: ${item.abv}`}</Text>}
-          {!clickable && <Text style={styles.text}>{`IBU: ${item.ibu}`}</Text>}
-          {!clickable && <Text style={styles.text}>{`EBC: ${item.ebc}`}</Text>}
+          {related && <Text style={styles.text}>{`ABV: ${item.abv}`}</Text>}
+          {related && <Text style={styles.text}>{`IBU: ${item.ibu}`}</Text>}
+          {related && <Text style={styles.text}>{`EBC: ${item.ebc}`}</Text>}
         </View>
+
+        {modalVisible && <DetailsModal item={item} />}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -102,7 +96,7 @@ const styles = StyleSheet.create({
 
 BeerTile.propTypes = {
   item: PropTypes.object.isRequired,
-  clickable: PropTypes.bool,
+  related: PropTypes.bool,
 };
 
 export default BeerTile;

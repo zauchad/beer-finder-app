@@ -27,7 +27,8 @@ let FilterableDate = (props) => {
   const title = name.replace('_', ' ');
 
   if (date) {
-    formattedDate = new Date(`${date.split('-')[1]}-${date.split('-')[0]}`);
+    //rearrange to format understandable by component (YYYY-MM)
+    formattedDate = new Date(date.split('-')[1], date.split('-')[0]);
   }
 
   const [show, setShow] = useState(false);
@@ -38,8 +39,14 @@ let FilterableDate = (props) => {
 
   // handler to fire before passing to parent
   const afterOnChange = (event, selectedDate) => {
+    //do nothing when user reject change
+    if (event && event.type == 'dismissed') {
+      return;
+    }
+
     let currentDate = selectedDate || new Date();
 
+    //rearrange to format understandable by API (MM-YYYY)
     currentDate = `${currentDate.getMonth()}-${currentDate.getFullYear()}`;
     setShow(Platform.OS === 'ios');
 
@@ -58,10 +65,7 @@ let FilterableDate = (props) => {
       />
       {show && (
         <DateTimePicker
-          testID='dateTimePicker'
           timeZoneOffsetInMinutes={0}
-          value={new Date()}
-          display='default'
           onChange={afterOnChange}
           value={formattedDate}
         />

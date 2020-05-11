@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  StyleSheet,
   ActivityIndicator,
   View,
   FlatList,
   RefreshControl,
   Alert,
-  SafeAreaView,
 } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
@@ -15,6 +13,15 @@ import BASE_COLOR, { GREY_COLOR, WHITE_COLOR } from '../helpers';
 import FilterBar from '../components/FilterBar';
 import FilterableDate from '../components/FilterableDate';
 import BeerTile from '../components/BeerTile';
+
+/**
+ * Beer list screen
+ *
+ * Displays searchbar to filter beers by yeast attribute
+ * Displays filter bar to filter by brewed_before and brewed_after attributes
+ * FlatList displaying 25 items per page (default API returned items length)
+ *
+ */
 export default class ListScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -113,7 +120,7 @@ export default class ListScreen extends React.Component {
     return (
       <View
         style={{
-          height: 2,
+          height: 1,
           width: '100%',
           backgroundColor: GREY_COLOR,
         }}
@@ -169,6 +176,7 @@ export default class ListScreen extends React.Component {
           onChangeText={this.updateSearch}
           value={this.state.search}
           onClear={this.resetSearch}
+          containerStyle={{ width: '100%' }}
         />
         <FilterBar clearFilters={this.clearFilters}>
           <FilterableDate
@@ -192,7 +200,7 @@ export default class ListScreen extends React.Component {
               onRefresh={this.onRefresh}
             />
           }
-          renderItem={({ item }) => <BeerTile item={item} clickable />}
+          renderItem={({ item }) => <BeerTile item={item} />}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={this.renderFooter}
           onEndReachedThreshold={0.5}
@@ -204,22 +212,10 @@ export default class ListScreen extends React.Component {
   };
 
   render = () => {
-    return (
-      <SafeAreaView style={styles.container}>
-        {this.state.loading && this.page === 1 ? (
-          <ActivityIndicator size='large' color={BASE_COLOR} />
-        ) : (
-          this.renderList()
-        )}
-      </SafeAreaView>
-    );
+    if (this.state.loading && this.page === 1) {
+      return <ActivityIndicator size='large' color={BASE_COLOR} />;
+    } else {
+      return this.renderList();
+    }
   };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-});

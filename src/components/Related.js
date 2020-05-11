@@ -53,7 +53,7 @@ export default Related = (props) => {
       >
         {items &&
           items.map((i) => {
-            return <BeerTile item={i} key={i.id.toString()} />;
+            return <BeerTile item={i} key={i.id.toString()} related />;
           })}
       </ScrollView>
     </React.Fragment>
