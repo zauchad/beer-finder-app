@@ -11,6 +11,19 @@ import PropTypes from 'prop-types';
 import BASE_COLOR, { GREEN_COLOR } from '../helpers';
 import DetailsModal from '../components/DetailsModal';
 
+/**
+ * Component responsible for displaying one beer on list
+ *
+ * Displays different data parts depending on use clickable prop
+ *
+ * item:      beer details
+ * clickable: availability to open modal with beer details
+ *
+ * @param {
+ *      item:      object,
+ *      clickable: bool
+ * } props
+ */
 let BeerTile = (props) => {
   let { item, clickable } = props;
 
@@ -37,19 +50,25 @@ let BeerTile = (props) => {
           style={styles.image}
         />
         <View style={{ flexShrink: 1 }}>
-          <Text style={styles.text}>{item.name}</Text>
+          <Text style={[styles.text, { fontWeight: 'bold' }]}>{item.name}</Text>
 
           {clickable && <Text style={styles.text}>{item.description}</Text>}
 
-          <Text style={[styles.text, { color: GREEN_COLOR }]}>
-            {`First brewed: ${item.first_brewed}`}
-          </Text>
+          {clickable && (
+            <Text style={[styles.text, { color: GREEN_COLOR }]}>
+              {`First brewed: ${item.first_brewed}`}
+            </Text>
+          )}
 
-          {item.ingredients && (
+          {clickable && item.ingredients && (
             <Text style={styles.textItalic}>
               {`Yeast: ${item.ingredients.yeast}`}
             </Text>
           )}
+
+          {!clickable && <Text style={styles.text}>{`ABV: ${item.abv}`}</Text>}
+          {!clickable && <Text style={styles.text}>{`IBU: ${item.ibu}`}</Text>}
+          {!clickable && <Text style={styles.text}>{`EBC: ${item.ebc}`}</Text>}
         </View>
       </View>
     </TouchableWithoutFeedback>

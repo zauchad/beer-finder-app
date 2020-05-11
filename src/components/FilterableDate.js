@@ -6,6 +6,21 @@ import { Button } from 'react-native-elements';
 
 import BASE_COLOR, { GREEN_COLOR } from '../helpers';
 
+/**
+ * Responsible for displaying button which open native DatePicker
+ *
+ * Displays different basic item properties with related beers basing on similar ABV/IBU/EBC
+ *
+ * name:      property in API filtered by
+ * onChange:  handler to invoke parent logic on event
+ * date:      date in format MM-YYYY (format required for API usage) modified inside component
+ *
+ * @param {
+ *      name:      string,
+ *      onChange:  function,
+ *      date:      string,
+ * } props
+ */
 let FilterableDate = (props) => {
   let { name, onChange, date } = props,
     formattedDate = new Date();
@@ -21,6 +36,7 @@ let FilterableDate = (props) => {
     setShow(!show);
   };
 
+  // handler to fire before passing to parent
   const afterOnChange = (event, selectedDate) => {
     let currentDate = selectedDate || new Date();
 

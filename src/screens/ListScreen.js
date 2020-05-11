@@ -3,16 +3,15 @@ import {
   StyleSheet,
   ActivityIndicator,
   View,
-  Text,
   FlatList,
   RefreshControl,
   Alert,
   SafeAreaView,
 } from 'react-native';
-import { SearchBar, Button } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 
 import API_URL from '../config';
-import BASE_COLOR, { GREEN_COLOR, GREY_COLOR, WHITE_COLOR } from '../helpers';
+import BASE_COLOR, { GREY_COLOR, WHITE_COLOR } from '../helpers';
 import FilterBar from '../components/FilterBar';
 import FilterableDate from '../components/FilterableDate';
 import BeerTile from '../components/BeerTile';
@@ -27,7 +26,6 @@ export default class ListScreen extends React.Component {
       listScrolled: false,
       search: '',
       filters: {},
-      error: '',
     };
 
     this.page = 1;

@@ -13,6 +13,17 @@ import PropTypes from 'prop-types';
 import BASE_COLOR from '../helpers';
 import Related from './Related';
 
+/**
+ * Component responsible for displaying beer details
+ *
+ * Displays different basic item properties with related beers basing on similar ABV/IBU/EBC
+ *
+ * item:      beer details
+ *
+ * @param {
+ *      item:      object,
+ * } props
+ */
 let DetailsModal = (props) => {
   let { item } = props;
 

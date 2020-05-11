@@ -5,7 +5,20 @@ import PropTypes from 'prop-types';
 
 import BASE_COLOR, { WHITE_COLOR, GREY_COLOR } from '../helpers';
 
+/**
+ * Responsible for displaying filtering list bar with clear button for clearing filters
+ *
+ * children:      filters passed as children
+ * clearFilters:  handler to hook parent logic on event
+ *
+ * @param {
+ *      children:      object,
+ *      clearFilters:  function,
+ * } props
+ */
 export default FilterBar = (props) => {
+  let { children, clearFilters } = props;
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -13,10 +26,10 @@ export default FilterBar = (props) => {
         contentContainerStyle={styles.scrollViewContent}
         showsHorizontalScrollIndicator={false}
       >
-        <View style={{ flexDirection: 'row' }}>{props.children}</View>
+        <View style={{ flexDirection: 'row' }}>{children}</View>
         <Button
           title='Clear'
-          onPress={props.clearFilters}
+          onPress={clearFilters}
           buttonStyle={{
             alignSelf: 'flex-start',
             justifyContent: 'flex-end',

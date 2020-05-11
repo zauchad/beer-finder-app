@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, ScrollView, View, Alert } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 
-import BASE_COLOR, { WHITE_COLOR, GREY_COLOR } from '../helpers';
+import BASE_COLOR from '../helpers';
 import API_URL from '../config';
 import BeerTile from './BeerTile';
 
+/**
+ * Responsible for displaying related items in horizontal ScrollView
+ *
+ * Using approx variable to apply acceptable filtered attribute value difference
+ *
+ * type:      attribute for filtering beer in API
+ * typeValue:  attribute value
+ *
+ * @param {
+ *      type:      string,
+ *      typeValue: number,
+ * } props
+ */
 export default Related = (props) => {
   let { type, typeValue } = props,
     typeLowerCase = type.toLowerCase(),
@@ -33,16 +45,7 @@ export default Related = (props) => {
 
   return (
     <React.Fragment>
-      <Text
-        style={{
-          fontSize: 16,
-          textAlign: 'center',
-          color: BASE_COLOR,
-          fontStyle: 'italic',
-        }}
-      >
-        Related ({type})
-      </Text>
+      <Text style={styles.textItalic}>Related ({type})</Text>
       <ScrollView
         horizontal
         contentContainerStyle={styles.scrollViewContent}
@@ -62,6 +65,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexGrow: 1,
+  },
+  textItalic: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: BASE_COLOR,
+    fontStyle: 'italic',
   },
 });
 
